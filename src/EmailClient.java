@@ -24,16 +24,12 @@ public class EmailClient
                 System.out.println("Login");
                 Loginview loginview = new Loginview();
                 account = loginview.login(manager);
-                System.out.println(account.getEmail());
-                System.out.println(account.getPassword());
                 break;
 
             case 2 :
                 System.out.println("SignUp");
                 SignUpView signUpView = new SignUpView();
                 account = signUpView.signUp(manager);
-                System.out.println(account.getEmail());
-                System.out.println(account.getPassword());
                 break;
 
             default: break;
