@@ -1,8 +1,8 @@
 public class Loginview
 {
-    public String login(AccountManager manager)
+    public Account login(AccountManager manager)
     {
-        boolean check;
+        Account account = null;
         String email;
         String password;
 
@@ -10,14 +10,14 @@ public class Loginview
        {
            email = IOUtils.getEmail();
            password = IOUtils.getPassword();
-           check = manager.login(email,password);
-           if(check==false)
+           account = manager.login(email,password);
+           if(account==null)
            {
                 System.out.println("Your login email or password is wrong!!");
                 System.out.println("Please try again");
            }
-       }while (check==false);
+       }while (account==null);
 
-        return email;
+        return account;
     }
 }

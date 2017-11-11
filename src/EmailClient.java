@@ -6,12 +6,9 @@ public class EmailClient
 
     static public void main(String args[])
     {
-        String email;
-
         Loginview loginview = new Loginview();
         manager.initialize();
-        email = loginview.login(manager);
-        account = manager.getAccount(email);
+        account = loginview.login(manager);
         System.out.println(account.getEmail());
         System.out.println(account.getPassword());
     }

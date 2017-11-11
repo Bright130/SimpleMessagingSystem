@@ -3,27 +3,15 @@ import java.util.Date;
 
 public class AccountManager
 {
-    private static ArrayList<Account> accountsList;
+    private  Account account = null;
 
-    public static void initialize()
+    public  void initialize()
     {
-        accountsList = new ArrayList<Account>();
-        accountsList = DBConnection.getAccount();
+       //  account = null;
+       // accountsList = DBConnection.getAccount();
     }
 
-    public Account getAccount(String email)
-    {
-        Account account = null;
-        for (Account a:accountsList)
-        {
-            if(email.equals(a.getEmail()))
-            {
-                account = a;
-                break;
-            }
-        }
-        return account;
-    }
+
 //
 //    public ArrayList<Account> readAccount(String email)
 //    {
@@ -35,22 +23,21 @@ public class AccountManager
 //
 //    }
 //
-    public boolean login(String email,String password)
+    public Account login(String email,String password)
     {
-        //Account account = new Account();
-        for (Account a:accountsList)
-        {
-            if(email.equals(a.getEmail())&&password.equals(a.getPassword()))
+        Account temp=null;
+        temp = DBConnection.getAccount(email) ;
+
+            if(password.equals(temp.getPassword()))
             {
-                return true;
+                account = temp;
+                return account;
             }
-        }
-        return false;
+        return null;
     }
 //
 //    public boolean logout(String email, Date upDateTime)
 //    {
 //
 //    }
-
 }
