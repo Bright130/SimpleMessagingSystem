@@ -17,11 +17,9 @@ public class DBConnection {
 
     /**  Tester  **/
     public static void main(String[] args) {
-        ArrayList<Account> account =  DBConnection.getAccount();
-        System.out.println(account.size());
-        for (Account a:account) {
-            System.out.println(a.getEmail());
-        }
+        Account account =  DBConnection.getAccount("aaa@a.com");
+        System.out.println(account.getEmail());
+        System.out.println(account.getPassword());
 
     }
 
@@ -38,44 +36,40 @@ public class DBConnection {
         return connection ;
     }
 
-    public static ArrayList<Account> getAccount(String where) {
+    public static Account getAccount(String email) {
 
         Connection connection = openDB();
         if(connection == null)
             return null;
-        ArrayList<Account> accounts = new ArrayList<Account>();
+        Account account = null;
         Statement statement = null;
         ResultSet resultSet = null;
         try{
             statement = connection.createStatement();
-//            String sql = "INSERT INTO t (num) " +
-//                    "VALUES (1);";
-//            statement.executeUpdate(sql);
 
-            resultSet = statement.executeQuery( "SELECT * FROM Account WHERE "+where+" ;");
+            resultSet = statement.executeQuery( "SELECT * FROM Account WHERE username like '"+email+"' ;");
 
-            while ( resultSet.next() ) {
+            if ( resultSet!=null) {
 
-                accounts.add(new Account(resultSet.getString("username"),
-                        resultSet.getString("passwordUser"),
-                        resultSet.getString("lastRefresh")
-                ));
+                account =  new Account(resultSet.getString("username"),
+                                   resultSet.getString("passwordUser"),
+                                   resultSet.getString("lastRefresh")
+                                  );
             }
 
             resultSet.close();
             statement.close();
-            //  connection.commit();
             connection.close();
-            System.out.println("Records created successfully");
+            System.out.println("Read successfully");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 
         }
 
-        return accounts;
+        return account;
     }
 
-    public static ArrayList<Account> getAccount() {
+    public static ArrayList<Account> getAccounts() {
 
         Connection connection = openDB();
         if(connection == null)
@@ -107,6 +101,10 @@ public class DBConnection {
 
         return accounts;
     }
+
+
+
+
 
 
 }
