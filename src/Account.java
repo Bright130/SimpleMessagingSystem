@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.lang.String
 
 public class Account
 {
@@ -10,17 +11,17 @@ public class Account
 
     public void setEmail(String email)
     {
-
+        Email = IOUtils.getEmail();
     }
 
     public void setPassword(String password)
     {
-
+        Password = IOUtils.getPassword();
     }
 
     public void setLastUpdate(Date time)
     {
-
+        LastUpdate = IOUtils.getDateTime();
     }
 
     public String getEmail()
