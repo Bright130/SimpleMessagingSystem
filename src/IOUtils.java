@@ -1,6 +1,9 @@
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IOUtils
 {
@@ -33,12 +36,45 @@ public class IOUtils
 
     public static String getEmail()
     {
+        String email;
+        int check = 0;
 
+        do
+        {
+            check = 0;
+            Scanner in = new Scanner(System.in);
+            System.out.println("Enter your Email : ");
+            email = in.next();
+
+
+            Pattern p = Pattern.compile("^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$");
+            Matcher m = p.matcher(email);
+
+            if (!m.find())
+            {
+                System.out.println("Email not valid!!");
+                check=1;
+            }
+
+        }while (check==1);
+
+        return email;
     }
 
     public static String getPassword()
     {
+        String password;
 
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter your password : ");
+        password = in.next();
+
+        if(password.length()<8 || password.length()>12)
+        {
+            System.out.println("Password must has 8-12 character!!");
+        }
+
+        return password;
     }
 
 
