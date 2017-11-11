@@ -3,7 +3,6 @@ public class Loginview
     public Account login(AccountManager manager)
     {
         Account account;
-
         String email;
         String password;
 

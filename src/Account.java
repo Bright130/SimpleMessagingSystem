@@ -26,7 +26,7 @@ public class Account
         password = IOUtils.getPassword();
     }
 
-    public void setLastUpdate(Date time)
+    public void setLastUpdate(String time)
     {
         lastRefresh = IOUtils.getDateTime();
     }

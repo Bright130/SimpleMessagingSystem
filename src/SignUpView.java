@@ -1,14 +1,20 @@
+import java.util.Date;
+
 public class SignUpView
 {
     public Account signUp(AccountManager manager)
     {
         Account account;
 
-        String email;
+        String userName;
         String password;
+        String created;
 
-        email = IOUtils.getEmail();
+        userName = IOUtils.getEmail();
         password = IOUtils.getPassword();
+        created = IOUtils.getDateTime();
+
+        account = new Account(userName,password,created);
 
         return account;
     }
