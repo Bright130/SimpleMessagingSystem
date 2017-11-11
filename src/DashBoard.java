@@ -16,36 +16,36 @@ public class DashBoard
 
     private EmailMessage message;
 
-    @Constructor
-    public DashBoard(Account account)
-    {
-
-    }
-
-    public void readEmail()
-    {
-
-    }
-
-    public void menu()
-    {
-
-    }
-
-    public void showDetail()
-    {
-
-    }
-
-    public boolean deleteEmail()
-    {
-
-    }
-
-    public void showList()
-    {
-
-    }
+//    @Constructor
+//    public DashBoard(Account account)
+//    {
+//
+//    }
+//
+//    public void readEmail()
+//    {
+//
+//    }
+//
+//    public void menu()
+//    {
+//
+//    }
+//
+//    public void showDetail()
+//    {
+//
+//    }
+//
+//    public boolean deleteEmail()
+//    {
+//
+//    }
+//
+//    public void showList()
+//    {
+//
+//    }
 
 
 }

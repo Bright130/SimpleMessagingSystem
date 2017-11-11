@@ -1,13 +1,27 @@
+/*********************************************
+ *  DBConnection
+ *   A class that connect to SQLite database
+ *   to read and write data.
+ *
+ *   Created by Chainarong Tumapha (Bright) 58070503409
+ *     11 November 2017
+ *
+ */
 
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class DBConnection {
 
+    /**  Tester  **/
     public static void main(String[] args) {
-        DBConnection.readDB("*","Account","1");
-
+        ArrayList<Account> account =  DBConnection.getAccount();
+        System.out.println(account.size());
+        for (Account a:account) {
+            System.out.println(a.getEmail());
+        }
 
     }
 
@@ -24,44 +38,75 @@ public class DBConnection {
         return connection ;
     }
 
-    public static ResultSet readDB(String select,String from, String where) {
+    public static ArrayList<Account> getAccount(String where) {
 
         Connection connection = openDB();
         if(connection == null)
             return null;
-        Statement stmt = null;
-        ResultSet rs = null;
+        ArrayList<Account> accounts = new ArrayList<Account>();
+        Statement statement = null;
+        ResultSet resultSet = null;
         try{
-            stmt = connection.createStatement();
+            statement = connection.createStatement();
 //            String sql = "INSERT INTO t (num) " +
 //                    "VALUES (1);";
-//            stmt.executeUpdate(sql);
+//            statement.executeUpdate(sql);
 
-             rs = stmt.executeQuery( "SELECT "+select+" FROM "+from+" WHERE "+where+" ;");
+            resultSet = statement.executeQuery( "SELECT * FROM Account WHERE "+where+" ;");
 
-            while ( rs.next() ) {
-                //int id = rs.getInt("id");
-                String  username = rs.getString("username");
-                //int age  = rs.getInt("age");
-                String  lastRefresh = rs.getString("lastRefresh");
-                //float salary = rs.getFloat("salary");
+            while ( resultSet.next() ) {
 
-                System.out.println( "Username = " + username );
-                System.out.println( "Time = " + lastRefresh );
-
-                System.out.println();
+                accounts.add(new Account(resultSet.getString("username"),
+                        resultSet.getString("passwordUser"),
+                        resultSet.getString("lastRefresh")
+                ));
             }
 
-            rs.close();
-            stmt.close();
-         //  connection.commit();
-           connection.close();
-           System.out.println("Records created successfully");
+            resultSet.close();
+            statement.close();
+            //  connection.commit();
+            connection.close();
+            System.out.println("Records created successfully");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 
         }
 
-       return rs;
+        return accounts;
     }
+
+    public static ArrayList<Account> getAccount() {
+
+        Connection connection = openDB();
+        if(connection == null)
+            return null;
+        ArrayList<Account> accounts = new ArrayList<Account>();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try{
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery( "SELECT * FROM Account  ;");
+
+            while ( resultSet.next() ) {
+
+                accounts.add(new Account(resultSet.getString("username"),
+                        resultSet.getString("passwordUser"),
+                        resultSet.getString("lastRefresh")
+                ));
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+            System.out.println("Records created successfully");
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+
+        }
+
+        return accounts;
+    }
+
+
 }

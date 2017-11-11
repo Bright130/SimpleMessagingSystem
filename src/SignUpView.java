@@ -1,7 +1,7 @@
 public class SignUpView
 {
-    public Account signUp(AccountManager manager)
-    {
-
-    }
+//    public Account signUp(AccountManager manager)
+//    {
+//
+//    }
 }

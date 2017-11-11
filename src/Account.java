@@ -1,42 +1,49 @@
 import java.util.Date;
-import java.lang.String
+import java.lang.String;
 
 public class Account
 {
-    private String Email;
+    private String email;
 
-    private String Password;
+    private String password;
 
-    private Date LastUpdate;
+    private String lastRefresh;
+
+    Account(String username,String password,String lastRefresh)
+    {
+        this.email = username;
+        this.password = password ;
+        this.lastRefresh = lastRefresh;
+    }
 
     public void setEmail(String email)
     {
-        Email = IOUtils.getEmail();
+        email = IOUtils.getEmail();
     }
 
     public void setPassword(String password)
     {
-        Password = IOUtils.getPassword();
+        password = IOUtils.getPassword();
     }
 
     public void setLastUpdate(Date time)
     {
-        LastUpdate = IOUtils.getDateTime();
+        lastRefresh = IOUtils.getDateTime();
     }
 
     public String getEmail()
     {
-        return Email;
+        return email;
     }
 
     public String getPassword()
     {
-        return Password;
+        return password;
     }
 
-    public Date getLastUpdate()
+    public String getLastUpdate()
     {
-        return LastUpdate;
+        return lastRefresh;
     }
 
     public boolean sendMessage(EmailMessage msg)
