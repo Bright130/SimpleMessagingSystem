@@ -9,12 +9,12 @@ public class EmailClient
     static public void main(String args[])
     {
         int number;
+        Scanner in = new Scanner(System.in);
 
         manager.initialize();
         System.out.println("Simple Messaging System");
         System.out.println("    1. Login");
         System.out.println("    2. SignUp");
-        Scanner in = new Scanner(System.in);
         System.out.println("Choose : ");
         number = in.nextInt();
 
@@ -38,6 +38,9 @@ public class EmailClient
 
             default: break;
         }
+
+        DashBoard myDashBoard = new DashBoard(account);
+        myDashBoard.showList();
 
     }
 }
