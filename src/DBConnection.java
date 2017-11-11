@@ -18,15 +18,13 @@ public class DBConnection {
     /**  Tester  **/
     public static void main(String[] args) {
         Account b = getAccount("bbb@b.com");
-        System.out.println("b.getLastUpdate() = " + b.getLastUpdate());
         ArrayList<EmailMessage> messages = getMessage(b);
         for (EmailMessage m : messages) {
-            System.out.println("m = " + m.getSubject());
-            m.setIsRead(0);
-            DBConnection.updateStatusMessage(m);
+            System.out.println("m.getSubject() = " + m.getSubject());
+            System.out.println("m = " + m.getLastModified());
 
         }
-        DBConnection.deleteMessages(messages) ;
+
 
     }
 
@@ -169,7 +167,7 @@ public class DBConnection {
         try{
             account.setLastUpdate(IOUtils.getDateTime());
             statement = connection.createStatement();
-            resultSet = statement.executeQuery( "SELECT * FROM Message WHERE toEmail like '"+account.getEmail()+"' ;");
+            resultSet = statement.executeQuery( "SELECT * FROM Message WHERE toEmail like '"+account.getEmail()+"' ORDER BY lastModified DESC ;");
 
             while ( resultSet.next()) {
 
