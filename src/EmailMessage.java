@@ -1,9 +1,10 @@
-import java.util.ArrayList;
-import java.util.Date;
+import java.lang.String;
 
 public class EmailMessage
 {
-    private Date created;
+    private int id;
+
+    private String lastModified;
 
     private String toAddress;
 
@@ -11,9 +12,30 @@ public class EmailMessage
 
     private String subject;
 
-    private ArrayList<String> bodyText;
+    private String bodyText;
 
-    private String messageState;
+    private int isRead;
+
+    EmailMessage(String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead){
+
+        this.lastModified = lastModified;
+        this.toAddress = toAddress;
+        this.fromAddress = fromAddress;
+        this.subject = subject;
+        this.bodyText = bodyText;
+        this.isRead = isRead;
+    }
+
+    EmailMessage(int id,String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead){
+        this.id = id;
+        this.lastModified = lastModified;
+        this.toAddress = toAddress;
+        this.fromAddress = fromAddress;
+        this.subject = subject;
+        this.bodyText = bodyText;
+        this.isRead = isRead;
+    }
+
 
     public void setToEmail(String toAddress)
     {
@@ -30,19 +52,21 @@ public class EmailMessage
         this.subject = subject;
     }
 
-    public void setBodyText(ArrayList<String> bodyText)
+    public void setBodyText(String bodyText)
     {
         this.bodyText = bodyText;
     }
 
-    public void setMessageState(String messageState)
+    public void setIsRead(int isRead)
     {
-        this.messageState = messageState;
+        this.isRead = isRead;
     }
 
-    public Date getCreated()
+    public int getId() { return id; }
+
+    public String getLastModified()
     {
-        return created;
+        return lastModified;
     }
 
     public String getToEmail()
@@ -60,13 +84,20 @@ public class EmailMessage
         return subject;
     }
 
-    public ArrayList<String> getBodyText()
+    public String getBodyText()
     {
         return bodyText;
+    }
+
+    public int getIsRead()
+    {
+        return isRead;
     }
 
     public boolean send()
     {
         return true;
     }
+
+
 }
