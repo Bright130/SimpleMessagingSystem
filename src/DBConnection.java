@@ -22,10 +22,11 @@ public class DBConnection {
         ArrayList<EmailMessage> messages = getMessage(b);
         for (EmailMessage m : messages) {
             System.out.println("m = " + m.getSubject());
+            m.setIsRead(0);
+            DBConnection.updateStatusMessage(m);
+
         }
-        DBConnection.createMessage( new EmailMessage("2012:01:11 11:11:11","bbb@b.com","aaa@a.com","dfdfdf","asdasdasd",0)
-            );
-            System.out.println("b.getLastUpdate() = " + b.getLastUpdate());
+        DBConnection.deleteMessages(messages) ;
 
     }
 
@@ -233,7 +234,7 @@ public class DBConnection {
         }
         return true;
     }
-// TODO: 11/11/2017  TEST
+
     public static boolean updateStatusMessage(EmailMessage message) {
 
         Connection connection = openDB();
@@ -259,8 +260,8 @@ public class DBConnection {
         }
         return true;
     }
-// TODO: 11/11/2017   TEST
-    public static boolean deleteMessage(ArrayList<EmailMessage> messages) {
+
+    public static boolean deleteMessages(ArrayList<EmailMessage> messages) {
 
         Connection connection = openDB();
         if(connection == null)
@@ -273,7 +274,7 @@ public class DBConnection {
             for (EmailMessage e: messages        ) {
 
 
-                statement.executeUpdate("DELETE from Account " +
+                statement.executeUpdate("DELETE from Message " +
                         "WHERE id = '" + e.getId() + "' " +
                         " ;"
                 );
