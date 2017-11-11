@@ -26,18 +26,21 @@ public class AccountManager
     public Account login(String email,String password)
     {
         Account temp=null;
-        temp = DBConnection.getAccount(email) ;
-
+        temp = DBConnection.getAccount(email);
+        if(temp!=null)
+        {
             if(password.equals(temp.getPassword()))
             {
                 account = temp;
                 return account;
             }
-        return null;
+        }
+        return account;
     }
 //
 //    public boolean logout(String email, Date upDateTime)
 //    {
 //
 //    }
+
 }
