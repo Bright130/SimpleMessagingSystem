@@ -21,6 +21,7 @@ public class DBConnection {
         System.out.println(account.size());
         for (Account a:account) {
             System.out.println(a.getEmail());
+            System.out.println(a.getPassword());
         }
 
     }

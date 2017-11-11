@@ -43,7 +43,7 @@ public class IOUtils
         {
             check = 0;
             Scanner in = new Scanner(System.in);
-            System.out.println("Enter your Email : ");
+            System.out.println("Enter an Email : ");
             email = in.next();
 
 
@@ -69,10 +69,10 @@ public class IOUtils
         System.out.println("Enter your password : ");
         password = in.next();
 
-        if(password.length()<8 || password.length()>12)
+        /*if(password.length()<8 || password.length()>12)
         {
             System.out.println("Password must has 8-12 character!!");
-        }
+        }*/
 
         return password;
     }

@@ -9,12 +9,21 @@ public class Account
 
     private String lastRefresh;
 
+    Account()
+    {
+        this.email = null;
+        this.password = null;
+        this.lastRefresh = null;
+    }
+
     Account(String username,String password,String lastRefresh)
     {
         this.email = username;
         this.password = password ;
         this.lastRefresh = lastRefresh;
     }
+
+
 
     public void setEmail(String email)
     {
