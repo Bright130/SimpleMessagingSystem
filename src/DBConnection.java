@@ -17,7 +17,15 @@ public class DBConnection {
 
     /**  Tester  **/
     public static void main(String[] args) {
-        boolean a =DBConnection.deleteAccount(new Account ("aaa@a.com","000","2013-01-22 12:12:12"));
+        Account b = getAccount("bbb@b.com");
+        System.out.println("b.getLastUpdate() = " + b.getLastUpdate());
+        ArrayList<EmailMessage> messages = getMessage(b);
+        for (EmailMessage m : messages) {
+            System.out.println("m = " + m.getSubject());
+        }
+        DBConnection.createMessage( new EmailMessage("2012:01:11 11:11:11","bbb@b.com","aaa@a.com","dfdfdf","asdasdasd",0)
+            );
+            System.out.println("b.getLastUpdate() = " + b.getLastUpdate());
 
     }
 
@@ -146,6 +154,141 @@ public class DBConnection {
     }
 
 
+
+
+    public static ArrayList<EmailMessage> getMessage(Account account) {
+
+        Connection connection = openDB();
+        if(connection == null)
+            return null;
+        ArrayList<EmailMessage> messages = new ArrayList<EmailMessage>();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try{
+            account.setLastUpdate(IOUtils.getDateTime());
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery( "SELECT * FROM Message WHERE toEmail like '"+account.getEmail()+"' ;");
+
+            while ( resultSet.next()) {
+
+                messages.add(new EmailMessage(
+                        resultSet.getInt("id"),
+                        resultSet.getString("lastModified"),
+                        resultSet.getString("toEmail"),
+                        resultSet.getString("fromEmail"),
+                        resultSet.getString("subject"),
+                        resultSet.getString("body"),
+                        resultSet.getInt("isRead")
+                ));
+            }
+
+
+            resultSet.close();
+            System.out.println("Read successfully");
+
+            System.out.println("account.getLastUpdate() = " + account.getEmail());
+            statement.executeUpdate("UPDATE Account set "+
+                    "lastRefresh = '"+account.getLastUpdate()+"' "+
+                    "WHERE username like '"+account.getEmail()+"' "+
+                    " ;"
+            );
+            statement.close();
+            connection.commit();
+            connection.close();
+            System.out.println("Update time successfully");
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+
+        }
+        return messages;
+    }
+
+    public static boolean createMessage(EmailMessage message) {
+
+        Connection connection = openDB();
+        if(connection == null)
+            return false;
+        Statement statement = null;
+
+        try{
+            statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO Message (lastModified,toEmail,fromEmail,subject,body,isRead) " +
+                    "VALUES  ('"+message.getLastModified()+"'" +
+                    ",'"+message.getToEmail()+"'" +
+                    ",'"+message.getFromEmail()+"'" +
+                    ",'"+message.getSubject()+"'" +
+                    ",'"+message.getBodyText()+"'" +
+                    ",'"+message.getIsRead()+"');"
+            );
+
+            statement.close();
+            connection.commit();
+            connection.close();
+            System.out.println("Insert successfully");
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return false;
+        }
+        return true;
+    }
+// TODO: 11/11/2017  TEST
+    public static boolean updateStatusMessage(EmailMessage message) {
+
+        Connection connection = openDB();
+        if(connection == null)
+            return false;
+        Statement statement = null;
+
+        try{
+            statement = connection.createStatement();
+            statement.executeUpdate("UPDATE Message set "+
+                    "isRead = '"+message.getIsRead()+"' "+
+                    "WHERE id = '"+message.getId()+"' "+
+                    " ;"
+            );
+
+            statement.close();
+            connection.commit();
+            connection.close();
+            System.out.println("Update successfully");
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return false;
+        }
+        return true;
+    }
+// TODO: 11/11/2017   TEST
+    public static boolean deleteMessage(ArrayList<EmailMessage> messages) {
+
+        Connection connection = openDB();
+        if(connection == null)
+            return false;
+        Statement statement = null;
+
+        try{
+
+            statement = connection.createStatement();
+            for (EmailMessage e: messages        ) {
+
+
+                statement.executeUpdate("DELETE from Account " +
+                        "WHERE id = '" + e.getId() + "' " +
+                        " ;"
+                );
+            }
+
+            statement.close();
+            connection.commit();
+            connection.close();
+            System.out.println("Delete successfully");
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return false;
+        }
+        return true;
+    }
 //    public static ArrayList<Account> getAccounts() {
 //
 //        Connection connection = openDB();
