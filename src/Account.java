@@ -57,6 +57,7 @@ public class Account
 
     public boolean sendMessage(EmailMessage msg)
     {
+        DBConnection.createMessage(msg);
         return true;
     }
 }

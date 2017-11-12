@@ -1,7 +1,4 @@
-import jdk.nashorn.internal.objects.annotations.Constructor;
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class DashBoard
 {
@@ -52,32 +49,35 @@ public class DashBoard
     {
         EmailMessage temp = null;
         int number;
-        Scanner in = new Scanner(System.in);
 
-        System.out.println("Select an email : ");
-        number = in.nextInt();
+        number = IOUtils.getInteger("\nSelect an email for read : ");
         temp = emailList.get(number-1);
+        showDetail(temp);
 
-        System.out.println("Subject :  "+temp.getSubject());
-        System.out.println("    1. Read     2. Forward      3. Reply    4. Remove");
-        System.out.println("Choose : ");
-        number = in.nextInt();
+        System.out.println("    1. Forward     2. Reply      3. Remove    4. Exit");
+        number = IOUtils.getInteger("\nChoose : ");
         switch (number)
         {
             case 1 :
-                System.out.println("Read");
-                showDetail(temp);
+                System.out.println("Forward");
+                Editor forwardMsg = new Editor(myAccount);
+                ArrayList<EmailMessage> forwardEmail = new ArrayList<EmailMessage>();
+                forwardEmail=forwardMsg.forward(temp);
+                for(EmailMessage e:forwardEmail)
+                {
+                    myAccount.sendMessage(e);
+                }
                 break;
             case 2 :
-                System.out.println("Forward");
+                System.out.println("Reply");
+                Editor replyMsg = new Editor(myAccount);
+                message=replyMsg.reply(temp);
+                myAccount.sendMessage(message);
                 break;
             case 3 :
-                System.out.println("Reply");
-                break;
-            case 4 :
                 System.out.println("Remove");
                 break;
-            case 5 :
+            case 4 :
                 System.out.println("Exit");
                 break;
 
@@ -87,14 +87,26 @@ public class DashBoard
 
     public void showDetail(EmailMessage email)
     {
-        System.out.println("Subject : "+email.getSubject());
-        System.out.println("From : "+email.getFromEmail());
-        System.out.println("To : "+email.getToEmail());
-        System.out.println(""+email.getLastModified());
-        System.out.println("\n\n"+email.getBodyText()+"\n\n");
+        boolean check = false;
 
-        email.setIsRead(0);
-        DBConnection.updateStatusMessage(email);
+        System.out.println("From    : "+email.getFromEmail());
+        System.out.println("Date    : "+email.getLastModified());
+        System.out.println("Subject : "+email.getSubject());
+        System.out.println("To      : "+email.getToEmail());
+        System.out.println("\n\n"+email.getBodyText()+"\n\n");
+        do
+        {
+            String response = IOUtils.getString("\nClose?(y/n) ");
+            if ((response.startsWith("Y")) || (response.startsWith("y")))
+            {
+                check = true;
+            }
+        }while (check==false);
+        if(myAccount.getEmail().equals(email.getToEmail()))
+            {
+                email.setIsRead(0);
+                DBConnection.updateStatusMessage(email);
+            }
     }
 
     public boolean deleteEmail()
@@ -116,10 +128,10 @@ public class DashBoard
             System.out.println("    2. Show new message         "+unReadMsg.size());
             System.out.println("    3. Show read message        "+readMsg.size());
             System.out.println("    4. Show all sent message    "+sentMsg.size());
-            System.out.println("    5. Log out    ");
-            System.out.println("Choose : ");
-            Scanner in = new Scanner(System.in);
-            number = in.nextInt();
+            System.out.println("    5. New message    ");
+            System.out.println("    6. Multi message    ");
+            System.out.println("    7. Log out    ");
+            number = IOUtils.getInteger("\nChoose : ");
             switch (number)
             {
                 case 1 :
@@ -130,7 +142,8 @@ public class DashBoard
                         System.out.print("          From : "+m.getFromEmail());
                         System.out.println("    "+m.getLastModified());
                     }
-                    menu(allMsg);
+                    if(allMsg.size()>0)
+                        menu(allMsg);
                     break;
 
                 case 2 :
@@ -141,7 +154,8 @@ public class DashBoard
                         System.out.print("          From : "+m.getFromEmail());
                         System.out.println("    "+m.getLastModified());
                     }
-                    menu(unReadMsg);
+                    if(unReadMsg.size()>0)
+                        menu(unReadMsg);
                     break;
 
                 case 3 :
@@ -152,7 +166,8 @@ public class DashBoard
                         System.out.print("          From : "+m.getFromEmail());
                         System.out.println("    "+m.getLastModified());
                     }
-                    menu(readMsg);
+                    if(readMsg.size()>0)
+                        menu(readMsg);
                     break;
 
                 case 4 :
@@ -160,12 +175,32 @@ public class DashBoard
                     for (EmailMessage m : sentMsg)
                     {
                         System.out.print(""+(i++)+". Subject : "+m.getSubject());
-                        System.out.print("          From : "+m.getFromEmail());
+                        System.out.print("          To : "+m.getToEmail());
                         System.out.println("    "+m.getLastModified());
                     }
-                    menu(sentMsg);
+                    if(sentMsg.size()>0)
+                        menu(sentMsg);
                     break;
+
                 case 5 :
+                    System.out.println("New message");
+                    Editor msg = new Editor(myAccount);
+                    message = msg.newMsg();
+                    myAccount.sendMessage(message);
+                    break;
+
+                case 6 :
+                    System.out.println("Sent multi email");
+                    ArrayList<EmailMessage> multiEmail = new ArrayList<EmailMessage>();
+                    Editor all = new Editor(myAccount);
+                    multiEmail = all.multiMsg();
+                    for(EmailMessage e:multiEmail)
+                    {
+                        myAccount.sendMessage(e);
+                    }
+                    break;
+
+                case 7 :
                     System.out.println("Log out");
                     break;
 
@@ -173,6 +208,6 @@ public class DashBoard
             }
             i=1;
             readEmail();
-        }while (number!=5);
+        }while (number!=7);
     }
 }

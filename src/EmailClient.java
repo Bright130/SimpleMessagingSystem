@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class EmailClient
 {
     private static Account account = new Account();
@@ -9,14 +7,12 @@ public class EmailClient
     static public void main(String args[])
     {
         int number;
-        Scanner in = new Scanner(System.in);
 
         manager.initialize();
         System.out.println("Simple Messaging System");
         System.out.println("    1. Login");
         System.out.println("    2. SignUp");
-        System.out.println("Choose : ");
-        number = in.nextInt();
+        number = IOUtils.getInteger("Choose : ");
 
         switch (number)
         {

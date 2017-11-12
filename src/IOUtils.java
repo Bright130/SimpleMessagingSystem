@@ -77,6 +77,70 @@ public class IOUtils
         return password;
     }
 
+    /**
+     * Reads a string and returns it as the value of the function,
+     * without any prompt. Remove the newline before returning.
+     * @param   prompt    String to print, telling which coordinate
+     * @return  The string the user entered (maximum 100 chars long)
+     */
+    public static String getBareString()
+    {
+        String inputString;
+        int readBytes = 0;
+        byte buffer[] = new byte[200];
+        try
+        {
+            readBytes = System.in.read(buffer,0,200);
+        }
+        catch (IOException ioe)
+        {
+            System.out.println("Input/output exception - Exiting");
+            System.exit(1);
+        }
+        inputString = new String(buffer);
+        int pos = inputString.indexOf("\n");
+        if (pos > 0)
+            inputString = inputString.substring(0,pos);
+        return inputString;
+    }
+
+    /**
+     * Asks for an integer and returns it as the value of the function
+     * @param   prompt    String to print, telling which coordinate
+     * @return value entered. If not an integer, prints an error message
+     * and returns -999
+     */
+    public static int getInteger(String prompt)
+    {
+        int value = -999;
+        String inputString;
+        int readBytes = 0;
+        byte buffer[] = new byte[200];
+        System.out.println(prompt);
+        try
+        {
+            readBytes = System.in.read(buffer,0,200);
+        }
+        catch (IOException ioe)
+        {
+            System.out.println("Input/output exception - Exiting");
+            System.exit(1);
+        }
+        inputString = new String(buffer);
+        try
+        {
+            int pos = inputString.indexOf("\n");
+            if (pos > 0)
+                inputString = inputString.substring(0,pos);
+            value = Integer.parseInt(inputString);
+        }
+        catch (NumberFormatException nfe)
+        {
+            System.out.println("Bad number entered");
+        }
+        return value;
+    }
+
 
     /**
      *  Creates and returns a string with the current date

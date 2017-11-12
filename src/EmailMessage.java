@@ -16,8 +16,12 @@ public class EmailMessage
 
     private int isRead;
 
-    EmailMessage(String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead){
+    EmailMessage()
+    {
+    }
 
+    EmailMessage(String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead)
+    {
         this.lastModified = lastModified;
         this.toAddress = toAddress;
         this.fromAddress = fromAddress;
@@ -36,6 +40,10 @@ public class EmailMessage
         this.isRead = isRead;
     }
 
+    public void setLastModified(String date)
+    {
+        this.lastModified = date;
+    }
 
     public void setToEmail(String toAddress)
     {
