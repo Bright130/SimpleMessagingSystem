@@ -60,7 +60,7 @@ public class Editor
         forwardMessage+="\nFrom : ";
         forwardMessage+=email.getFromEmail();
         forwardMessage+="\nDate : ";
-        forwardMessage+=email.getLastModified();
+        forwardMessage+=email.getLastRefresh();
         forwardMessage+="\nSubject  : ";
         forwardMessage+=email.getSubject();
         forwardMessage+="\nTo   : ";
@@ -110,7 +110,7 @@ public class Editor
         replyMessage+="\nFrom : ";
         replyMessage+=email.getFromEmail();
         replyMessage+="\nDate : ";
-        replyMessage+=email.getLastModified();
+        replyMessage+=email.getLastRefresh();
         replyMessage+="\nSubject  : ";
         replyMessage+=email.getSubject();
         replyMessage+="\nTo   : ";
@@ -135,7 +135,7 @@ public class Editor
             msg.setBodyText(line);
         }
         msg.setIsRead(1);
-        msg.setLastModified(IOUtils.getDateTime());
+        msg.setLastRefresh(IOUtils.getDateTime());
         String response = IOUtils.getString("\nSend? ");
         if ((response.startsWith("Y")) ||
                 (response.startsWith("y")))
@@ -165,7 +165,7 @@ public class Editor
             msg.setBodyText(line);
         }
         msg.setIsRead(1);
-        msg.setLastModified(IOUtils.getDateTime());
+        msg.setLastRefresh(IOUtils.getDateTime());
         String response = IOUtils.getString("\nSend? ");
         if ((response.startsWith("Y")) ||
                 (response.startsWith("y")))

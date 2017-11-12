@@ -4,7 +4,7 @@ public class EmailMessage
 {
     private int id;
 
-    private String lastModified;
+    private String lastRefresh;
 
     private String toAddress;
 
@@ -24,9 +24,9 @@ public class EmailMessage
     {
     }
 
-    EmailMessage(String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead,int isSenderDel,int isReaderDel)
+    EmailMessage(String lastRefresh,String toAddress,String fromAddress,String subject,String bodyText,int isRead,int isSenderDel,int isReaderDel)
     {
-        this.lastModified = lastModified;
+        this.lastRefresh = lastRefresh;
         this.toAddress = toAddress;
         this.fromAddress = fromAddress;
         this.subject = subject;
@@ -36,9 +36,9 @@ public class EmailMessage
         this.isSenderDel = isSenderDel;
     }
 
-    EmailMessage(int id,String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead,int isSenderDel,int isReaderDel){
+    EmailMessage(int id,String lastRefresh,String toAddress,String fromAddress,String subject,String bodyText,int isRead,int isSenderDel,int isReaderDel){
         this.id = id;
-        this.lastModified = lastModified;
+        this.lastRefresh = lastRefresh;
         this.toAddress = toAddress;
         this.fromAddress = fromAddress;
         this.subject = subject;
@@ -48,9 +48,9 @@ public class EmailMessage
         this.isSenderDel = isSenderDel;
     }
 
-    public void setLastModified(String date)
+    public void setLastRefresh(String date)
     {
-        this.lastModified = date;
+        this.lastRefresh = date;
     }
 
     public void setToEmail(String toAddress)
@@ -89,9 +89,9 @@ public class EmailMessage
 
     public int getId() { return id; }
 
-    public String getLastModified()
+    public String getLastRefresh()
     {
-        return lastModified;
+        return lastRefresh;
     }
 
     public String getToEmail()
