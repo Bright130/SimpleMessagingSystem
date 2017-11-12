@@ -106,7 +106,7 @@ public class DashBoard
         boolean check = false;
 
         System.out.println("From    : "+email.getFromEmail());
-        System.out.println("Date    : "+email.getLastRefresh());
+        System.out.println("Date    : "+email.getLastModified());
         System.out.println("Subject : "+email.getSubject());
         System.out.println("To      : "+email.getToEmail());
         System.out.println("\n\n"+email.getBodyText()+"\n\n");
@@ -156,7 +156,7 @@ public class DashBoard
                     {
                         System.out.print(""+(i++)+". Subject : "+m.getSubject());
                         System.out.print("          From : "+m.getFromEmail());
-                        System.out.println("    "+m.getLastRefresh());
+                        System.out.println("    "+m.getLastModified());
                     }
                     if(allMsg.size()>0)
                         menu(allMsg);
@@ -168,7 +168,7 @@ public class DashBoard
                     {
                         System.out.print(""+(i++)+". Subject : "+m.getSubject());
                         System.out.print("          From : "+m.getFromEmail());
-                        System.out.println("    "+m.getLastRefresh());
+                        System.out.println("    "+m.getLastModified());
                     }
                     if(unReadMsg.size()>0)
                         menu(unReadMsg);
@@ -180,7 +180,7 @@ public class DashBoard
                     {
                         System.out.print(""+(i++)+". Subject : "+m.getSubject());
                         System.out.print("          From : "+m.getFromEmail());
-                        System.out.println("    "+m.getLastRefresh());
+                        System.out.println("    "+m.getLastModified());
                     }
                     if(readMsg.size()>0)
                         menu(readMsg);
@@ -192,7 +192,7 @@ public class DashBoard
                     {
                         System.out.print(""+(i++)+". Subject : "+m.getSubject());
                         System.out.print("          To : "+m.getToEmail());
-                        System.out.println("    "+m.getLastRefresh());
+                        System.out.println("    "+m.getLastModified());
                     }
                     if(sentMsg.size()>0)
                         menu(sentMsg);
