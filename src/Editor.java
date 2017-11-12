@@ -10,7 +10,7 @@ public class Editor
     {
         this.currentAccount = account;
     }
-//
+
 //    public Editor(EmailMessage msg,AccountManager mng)
 //    {
 //
