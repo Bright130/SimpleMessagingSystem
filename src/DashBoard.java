@@ -76,6 +76,9 @@ public class DashBoard
                 break;
             case 3 :
                 System.out.println("Remove");
+                ArrayList<EmailMessage> removeEmail = new ArrayList<EmailMessage>();
+                removeEmail.add(temp);
+                DBConnection.deleteMessages(removeEmail);
                 break;
             case 4 :
                 System.out.println("Exit");
