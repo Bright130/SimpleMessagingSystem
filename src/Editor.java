@@ -36,7 +36,7 @@ public class Editor
         }
         for(String n: fields)
         {
-            EmailMessage msg = new EmailMessage(IOUtils.getDateTime(),n,currentAccount.getEmail(),subject,body.getBodyText(),1);
+            EmailMessage msg = new EmailMessage(IOUtils.getDateTime(),n,currentAccount.getEmail(),subject,body.getBodyText(),1,0,0);
             multiMsg.add(msg);
         }
         String response = IOUtils.getString("\nSend? ");
@@ -86,7 +86,7 @@ public class Editor
 
         for(String n: fields)
         {
-            EmailMessage msg = new EmailMessage(IOUtils.getDateTime(),n,currentAccount.getEmail(),subject,bodyMsg.getBodyText(),1);
+            EmailMessage msg = new EmailMessage(IOUtils.getDateTime(),n,currentAccount.getEmail(),subject,bodyMsg.getBodyText(),1,0,0);
             forwardMsg.add(msg);
         }
         String response = IOUtils.getString("\nSend? ");

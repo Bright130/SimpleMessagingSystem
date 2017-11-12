@@ -21,7 +21,7 @@ public class DBConnection {
         ArrayList<EmailMessage> messages = getMessage(b);
         for (EmailMessage m : messages) {
             System.out.println("m.getSubject() = " + m.getSubject());
-            System.out.println("m = " + m.getLastModified());
+            System.out.print("m = " + m.getIsReaderDel() +""+m.getIsSenderDel());
 
         }
 
@@ -178,7 +178,9 @@ public class DBConnection {
                         resultSet.getString("fromEmail"),
                         resultSet.getString("subject"),
                         resultSet.getString("body"),
-                        resultSet.getInt("isRead")
+                        resultSet.getInt("isRead"),
+                        resultSet.getInt("isSenderDel"),
+                        resultSet.getInt("isReaderDel")
                 ));
             }
 
@@ -243,7 +245,9 @@ public class DBConnection {
         try{
             statement = connection.createStatement();
             statement.executeUpdate("UPDATE Message set "+
-                    "isRead = '"+message.getIsRead()+"' "+
+                    "isRead = '"+message.getIsRead()+"', "+
+                    "isSenderDel = '"+message.getIsSenderDel()+"', "+
+                    "isReaderDel = '"+message.getIsReaderDel()+"' "+
                     "WHERE id = '"+message.getId()+"' "+
                     " ;"
             );

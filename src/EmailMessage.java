@@ -16,11 +16,15 @@ public class EmailMessage
 
     private int isRead;
 
+    private int isSenderDel;
+
+    private int isReaderDel;
+
     EmailMessage()
     {
     }
 
-    EmailMessage(String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead)
+    EmailMessage(String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead,int isSenderDel,int isReaderDel)
     {
         this.lastModified = lastModified;
         this.toAddress = toAddress;
@@ -28,9 +32,11 @@ public class EmailMessage
         this.subject = subject;
         this.bodyText = bodyText;
         this.isRead = isRead;
+        this.isReaderDel = isReaderDel;
+        this.isSenderDel = isSenderDel;
     }
 
-    EmailMessage(int id,String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead){
+    EmailMessage(int id,String lastModified,String toAddress,String fromAddress,String subject,String bodyText,int isRead,int isSenderDel,int isReaderDel){
         this.id = id;
         this.lastModified = lastModified;
         this.toAddress = toAddress;
@@ -38,6 +44,8 @@ public class EmailMessage
         this.subject = subject;
         this.bodyText = bodyText;
         this.isRead = isRead;
+        this.isReaderDel = isReaderDel;
+        this.isSenderDel = isSenderDel;
     }
 
     public void setLastModified(String date)
@@ -70,6 +78,15 @@ public class EmailMessage
         this.isRead = isRead;
     }
 
+    public void setIsReaderDel(int flag)
+    {
+        this.isRead = isReaderDel;
+    }
+    public void setIsSenderDel(int flag)
+    {
+        this.isRead = isSenderDel;
+    }
+
     public int getId() { return id; }
 
     public String getLastModified()
@@ -100,6 +117,14 @@ public class EmailMessage
     public int getIsRead()
     {
         return isRead;
+    }
+    public int getIsReaderDel()
+    {
+        return isReaderDel;
+    }
+    public int getIsSenderDel()
+    {
+        return isSenderDel;
     }
 
     public boolean send()
