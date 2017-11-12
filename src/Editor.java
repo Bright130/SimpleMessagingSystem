@@ -55,13 +55,8 @@ public class Editor
     public ArrayList<EmailMessage> forward(EmailMessage email)
     {
         ArrayList<EmailMessage> forwardMsg = new ArrayList<EmailMessage>();
+        EmailMessage bodyMsg = new EmailMessage();
         String forwardMessage = "-------------------Forwarded message----------------------";
-
-        System.out.println("From : "+currentAccount.getEmail());
-        String allContact = IOUtils.getString("==> Enter To forward email(using',')" );
-        String fields[] = allContact.split(",");
-        String subject = IOUtils.getString("==> Enter email subject");
-
         forwardMessage+="\nFrom : ";
         forwardMessage+=email.getFromEmail();
         forwardMessage+="\nDate : ";
@@ -73,9 +68,25 @@ public class Editor
         forwardMessage+="\n\n";
         forwardMessage+=email.getBodyText();
 
+        System.out.println("From : "+currentAccount.getEmail());
+        String allContact = IOUtils.getString("==> Enter To forward email(using',')" );
+        String fields[] = allContact.split(",");
+        String subject = IOUtils.getString("==> Enter email subject");
+        System.out.println("==> Enter message text below. Type END to  finish.");
+        while (true)
+        {
+            String line = IOUtils.getBareString();
+            if (line.compareTo("END") == 0)
+                break;
+            line+="\n\n";
+            line+=forwardMessage;
+            bodyMsg.setBodyText(line);
+        }
+
+
         for(String n: fields)
         {
-            EmailMessage msg = new EmailMessage(IOUtils.getDateTime(),n,currentAccount.getEmail(),subject,forwardMessage,1);
+            EmailMessage msg = new EmailMessage(IOUtils.getDateTime(),n,currentAccount.getEmail(),subject,bodyMsg.getBodyText(),1);
             forwardMsg.add(msg);
         }
         String response = IOUtils.getString("\nSend? ");
@@ -119,7 +130,7 @@ public class Editor
             String line = IOUtils.getBareString();
             if (line.compareTo("END") == 0)
                 break;
-            line+="\n";
+            line+="\n\n";
             line+=replyMessage;
             msg.setBodyText(line);
         }
