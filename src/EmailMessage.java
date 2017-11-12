@@ -78,13 +78,13 @@ public class EmailMessage
         this.isRead = isRead;
     }
 
-    public void setIsReaderDel(int flag)
+    public void setIsReaderDel(int delRead)
     {
-        this.isRead = isReaderDel;
+        this.isReaderDel = delRead;
     }
-    public void setIsSenderDel(int flag)
+    public void setIsSenderDel(int delSend)
     {
-        this.isRead = isSenderDel;
+        this.isSenderDel = delSend;
     }
 
     public int getId() { return id; }

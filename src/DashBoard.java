@@ -34,11 +34,11 @@ public class DashBoard
             {
                 unReadMsg.add(m);
             }
-            else if(m.getIsRead()==0&&myAccount.getEmail().equals(m.getToEmail()))
+            else if(m.getIsRead()==0&&m.getIsReaderDel()==0&&myAccount.getEmail().equals(m.getToEmail()))
             {
                 readMsg.add(m);
             }
-            else if(myAccount.getEmail().equals(m.getFromEmail()))
+            else if(myAccount.getEmail().equals(m.getFromEmail())&&m.getIsSenderDel()==0)
             {
                 sentMsg.add(m);
             }
@@ -76,9 +76,22 @@ public class DashBoard
                 break;
             case 3 :
                 System.out.println("Remove");
-                ArrayList<EmailMessage> removeEmail = new ArrayList<EmailMessage>();
-                removeEmail.add(temp);
-                DBConnection.deleteMessages(removeEmail);
+                if(myAccount.getEmail().equals(temp.getToEmail()))
+                {
+                    temp.setIsReaderDel(1);
+                    DBConnection.updateStatusMessage(temp);
+                }
+                else if(myAccount.getEmail().equals(temp.getFromEmail()))
+                {
+                    temp.setIsSenderDel(1);
+                    DBConnection.updateStatusMessage(temp);
+                }
+                if(temp.getIsReaderDel()==1&&temp.getIsSenderDel()==1)
+                {
+                    ArrayList<EmailMessage> removeEmail = new ArrayList<EmailMessage>();
+                    removeEmail.add(temp);
+                    DBConnection.deleteMessages(removeEmail);
+                }
                 break;
             case 4 :
                 System.out.println("Exit");
